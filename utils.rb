@@ -46,7 +46,7 @@ class Utils
   end
 
   def self.initialize
-    @@followingNumber = 1
+    @@followingNumber = 0
 
     @@agent = Mechanize.new { |a|
       a.user_agent_alias = 'Mac Safari'
@@ -65,6 +65,7 @@ class Utils
 
     # Efetuando Login
     pass = File.open('pass', 'r').gets.split(';')
+
     login_page = @@agent.get(@@appUrl)
     form = login_page.forms[1]
     form["session[username_or_email]"] = pass[0]
@@ -77,6 +78,7 @@ class Utils
       puts 'Login Efetuado com Sucesso'
     else
       puts 'Falha de Login'
+      exit
     end
 
     div = login_page_doc.xpath('//div[@class="DashboardProfileCard  module"]')
