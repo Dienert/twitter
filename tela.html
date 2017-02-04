@@ -1,0 +1,28 @@
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v4.js"></script>
+<style>
+  .data {
+    width:50px;height:60px;float:left;margin:8px;
+  }
+</style>
+<script>
+  var width = window.innerWidth-10;
+    d3.text("dienert.csv", function(unparsedData) {
+        var psv = d3.dsvFormat("|");
+        var array = psv.parse(unparsedData);
+        var div_principal = d3.select("body")
+                              .append("div")
+                                  .attr("style", "width:"+width+";");
+        array.forEach(function(data) {
+            var div_data = div_principal.append("div")
+                .attr("class", "data");
+            div_data.append("a")
+                .attr("href", "http://twitter.com/"+data.profile)
+                .attr("title", data.user_bio)
+              .append("img")
+                .attr("style", "width:50px;height:50px;")
+                .attr("src", data.url_picture);
+            div_data.append("small").text(data.name);
+        });
+    });
+</script>
