@@ -49,8 +49,10 @@ class Utils
   end
 
   def self.login
-    #email = `read -p "Login: " uid; echo $uid`.chomp
-    #pass = `read -s -p "Senha: " password; echo $password`.chomp
+    #pass = []
+    #pass[0] = `read -p "Login: " uid; echo $uid`.chomp
+    #pass[1] = `read -s -p "Senha: " password; echo $password`.chomp
+    #puts @string
 
     # Efetuando Login
     pass = File.open('pass', 'r').gets.split(';')
