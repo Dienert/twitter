@@ -4,14 +4,17 @@ require 'openssl'
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 I_KNOW_THAT_OPENSSL_VERIFY_PEER_EQUALS_VERIFY_NONE_IS_WRONG = 1
 
-NUMERO_MAXIMO_AMIGOS = ""
-
 class Utils
-  @@agent
-  @@test_result_page
   @@appUrl = 'https://www.twitter.com/'
-  @@profile
-  @@name
+  @@followingNumber = 0
+
+  @@agent = Mechanize.new { |a|
+    a.user_agent_alias = 'Mac Safari'
+    a.idle_timeout = 1
+    a.read_timeout = 300
+  }
+
+  @@test_result_page = File.open("test_page.html", "w")
 
   def self.name
     @@name
@@ -33,8 +36,8 @@ class Utils
     @@test_result_page.write(page.to_s)
   end
 
-  def self.resultado
-    @@resultado
+  def self.arquivo_saida
+    @@arquivo_saida
   end
 
   def self.followingNumber
@@ -43,20 +46,6 @@ class Utils
 
   def self.setFollowingNumber followingNumber
     @@followingNumber = followingNumber
-  end
-
-  def self.initialize
-    @@followingNumber = 0
-
-    @@agent = Mechanize.new { |a|
-      a.user_agent_alias = 'Mac Safari'
-      a.idle_timeout = 1
-      a.read_timeout = 300
-    }
-
-    @@test_result_page = File.open("test_page.html", "w")
-
-    login
   end
 
   def self.login
@@ -91,8 +80,13 @@ class Utils
 
     puts "#{@@name} => @#{@@profile}"
 
-    @@resultado = File.open("#{@@profile}.csv", 'w')
-
+    @@arquivo_saida = File.open("#{@@profile}.csv", 'w')
+    column_separator = "|"
+    @@arquivo_saida.puts "name" + column_separator +
+                     "user_id" + column_separator +
+                     "profile" + column_separator +
+                     "user_bio" + column_separator +
+                     "url_picture"
   end
 
   def self.duration_from_seconds(seconds)

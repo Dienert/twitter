@@ -24,7 +24,7 @@ class TwitterUser
   end
 
   def to_cvs_line
-    column_separator = ";"
+    column_separator = "|"
     return @screen_name + column_separator +
          @user_id + column_separator +
          @profile + column_separator +
