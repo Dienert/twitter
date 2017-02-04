@@ -1,4 +1,4 @@
-# Twitter Web SCraper
+# Twitter Web Scraper
 
 Captura os perfis do twitter seguidos pelo usuário e monta uma tela compacta desses perfis
 
